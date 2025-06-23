@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrivePanel - Google Drive Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cpanel-container">
+        <header>
+            <h1>DrivePanel</h1>
+            <p>Google Drive Management Interface</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="user-info">
+                    <div class="avatar">👤</div>
+                    <span id="user-email">Not signed in</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li class="active"><a href="#"><span>📁</span> File Manager</a></li>
+                        <li><a href="#"><span>⬆️</span> Upload Files</a></li>
+                        <li><a href="#"><span>🔒</span> Security</a></li>
+                        <li><a href="#"><span>⚙️</span> Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div class="content-area">
+                <div class="auth-section">
+                    <button id="auth-button" class="btn btn-primary">Sign in with Google</button>
+                </div>
+                
+                <div id="upload-section" class="hidden">
+                    <h2>Upload Files to Google Drive</h2>
+                    <div class="upload-box" id="drop-zone">
+                        <input type="file" id="file-input" multiple style="display: none;">
+                        <label for="file-input" class="btn btn-secondary">Select Files</label>
+                        <p>or drag and drop files here</p>
+                    </div>
+                    
+                    <div id="file-list" class="hidden">
+                        <h3>Selected Files</h3>
+                        <ul id="files-to-upload"></ul>
+                        <button id="upload-button" class="btn btn-primary">Upload to Drive</button>
+                    </div>
+                    
+                    <div id="progress-container" class="hidden">
+                        <h3>Upload Progress</h3>
+                        <div class="progress-bar">
+                            <div id="progress" class="progress"></div>
+                        </div>
+                        <p id="status-message"></p>
+                    </div>
+                </div>
+                
+                <div id="drive-contents" class="hidden">
+                    <h2>Your Drive Files</h2>
+                    <div id="files-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
