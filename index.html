@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Quran App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .rating-container, .download-container {
+            display: none;
+            text-align: center;
+        }
+        .active {
+            display: block;
+        }
+        .stars {
+            font-size: 40px;
+            margin: 20px 0;
+        }
+        .star {
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star:hover, .star.active {
+            color: #f1c40f;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        input[type="email"] {
+            padding: 12px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .alert {
+            padding: 15px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+        .success {
+            background-color: #2ecc71;
+        }
+        .waiting {
+            background-color: #f39c12;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 10px;
+            background-color: #3498db;
+            width: 0%;
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quran App Download</h1>
+        
+        <div id="rating-container" class="rating-container active">
+            <h2>Rate Our App</h2>
+            <p>Please rate your experience with our Quran app before downloading.</p>
+            
+            <div class="stars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+            
+            <button id="submit-rating">Submit Rating</button>
+        </div>
+        
+        <div id="download-container" class="download-container">
+            <h2>Download Quran App</h2>
+            <p>Please enter your email address to receive the download link:</p>
+            
+            <input type="email" id="user-email" placeholder="Enter your email address" required>
+            <button id="download-btn">Download Now</button>
+        </div>
+        
+        <div id="alert" class="alert"></div>
+        
+        <div id="waiting-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <p id="waiting-message">Preparing your download...</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const ratingContainer = document.getElementById('rating-container');
+            const downloadContainer = document.getElementById('download-container');
+            const stars = document.querySelectorAll('.star');
+            const submitRatingBtn = document.getElementById('submit-rating');
+            const downloadBtn = document.getElementById('download-btn');
+            const userEmail = document.getElementById('user-email');
+            const alertBox = document.getElementById('alert');
+            const waitingContainer = document.querySelector('#waiting-container');
+            const waitingMessage = document.getElementById('waiting-message');
+            const progressBar = document.getElementById('progress-bar');
+            
+            let userRating = 0;
+            
+            // Star rating functionality
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    userRating = rating;
+                    
+                    // Update star display
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Submit rating
+            submitRatingBtn.addEventListener('click', function() {
+                if (userRating === 0) {
+                    showAlert('Please select a rating before submitting.');
+                    return;
+                }
+                
+                // In a real app, you would send this rating to your server
+                console.log('User rating:', userRating);
+                
+                // Transition to download page
+                ratingContainer.classList.remove('active');
+                downloadContainer.classList.add('active');
+                
+                showAlert('Thank you for your rating!', 'success');
+            });
+            
+            // Download button click
+            downloadBtn.addEventListener('click', function() {
+                const email = userEmail.value.trim();
+                
+                if (!email) {
+                    showAlert('Please enter your email address.');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showAlert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Show waiting message
+                downloadContainer.style.display = 'none';
+                waitingContainer.style.display = 'block';
+                showAlert('Please wait while we prepare your download...', 'waiting');
+                
+                // Animate progress bar
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        completeDownload(email);
+                    } else {
+                        width++;
+                        progressBar.style.width = width + '%';
+                    }
+                }, 100);
+            });
+            
+            // Helper functions
+            function showAlert(message, type = 'error') {
+                alertBox.textContent = message;
+                alertBox.className = 'alert';
+                alertBox.classList.add(type);
+                alertBox.style.display = 'block';
+                
+                // Hide alert after 5 seconds
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 5000);
+            }
+            
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            function completeDownload(email) {
+                waitingMessage.textContent = `The download link for Quran App has been sent to ${email}. Please check your inbox.`;
+                
+                // In a real app, you would send the email here
+                console.log('Sending download link to:', email);
+                
+                // Show success message
+                showAlert('Download link sent successfully!', 'success');
+            }
+        });
+    </script>
+</body>
+</html>
