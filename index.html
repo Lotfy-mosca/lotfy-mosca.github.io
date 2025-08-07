@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-dark: #0e1e4b; /* From the left arrow */
-      --primary-light: #2cb6c2; /* From the curved part */
+      --primary-dark: #0e1e4b;
+      --primary-light: #2cb6c2;
     }
 
     * {
@@ -18,10 +18,20 @@
       font-family: 'Inter', sans-serif;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
+      display: flex;
+      flex-direction: column;
       background-color: #f4f8fa;
       color: #333;
       line-height: 1.6;
+    }
+
+    .main-content {
+      flex: 1;
     }
 
     header {
@@ -80,27 +90,30 @@
       color: white;
       padding: 4rem 2rem;
       text-align: center;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+    /* Hide hero when nav is active */
+    .hero.hidden {
+        filter: blur(2px);
     }
 
-    .hero p {
-      font-size: 1.2rem;
-    }
-
+    /* Section Animation Styles */
     .section {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
       padding: 4rem 2rem;
       max-width: 1000px;
       margin: 0 auto;
-      scroll-margin-top: 80px; /* To account for fixed header */
+      scroll-margin-top: 80px;
     }
 
-    .section h2 {
-      color: var(--primary-dark);
-      margin-bottom: 1rem;
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .card {
@@ -116,12 +129,54 @@
       color: white;
       text-align: center;
       padding: 1.5rem 2rem;
-      margin-top: 4rem;
+      margin-top: auto;
     }
-    .logo{
-        border-radius: 50%;
-        box-shadow: 0px 0px 30px white;
-        z-index:100;
+    
+    .logo {
+      width: 50px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 30px white;
+      z-index: 100;
+    }
+
+    /* Floating Logo Animation */
+    .logo3 {
+      width: 40px;
+      scale: 2;
+      margin-bottom: 60px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 30px rgb(107, 80, 80);
+      z-index: 100;
+      opacity: .7;
+      border: .2px solid black;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) scale(1.5);
+      }
+      50% {
+        transform: translateY(-9px) scale(1.5);
+      }
+    }
+
+    span {
+      color: #abeaf0;
+      font-weight: 800;
+      font-style: oblique;
+      font-size: 46px;
+      text-shadow: 2px 2px 20px rgb(58, 41, 41);
+      width: 30px;
+    }
+    
+    .span {
+      color: #abeaf0;
+      font-weight: 800;
+      font-style: oblique;
+      font-size: 20px;
+      text-shadow: 2px 2px 20px rgb(58, 41, 41);
+      width: 30px;
     }
 
     /* Mobile styles */
@@ -132,14 +187,21 @@
 
       nav {
         position: fixed;
-        top: 83px;
+        top: 90px;
         left: -100%;
-        width: 100%;
+        width: 90%;
+        height: 270px;
+        margin-left: 30px;
         background-color: var(--primary-dark);
+        border: 2px solid white;
+        opacity: 0.8;
+        border-radius: 5px;
+        margin-top: 20px;
         flex-direction: column;
         align-items: center;
-        padding: 2rem 0;
+        padding: 1.5rem 0;
         transition: left 0.3s ease;
+        z-index: 99;
       }
 
       nav.active {
@@ -148,13 +210,13 @@
 
       nav a {
         margin: 1rem 0;
-        padding: 1rem;
         width: 100%;
         text-align: center;
+        opacity: 1;
       }
 
       .section {
-        scroll-margin-top: 140px; /* Larger offset for mobile */
+        scroll-margin-top: 140px;
       }
     }
 
@@ -162,11 +224,6 @@
     html {
       scroll-behavior: smooth;
     }
-    span{
-        color:#2cb6c2;
-        font-weight: 800;
-        font-style: oblique;
-        }
   </style>
 </head>
 <body>
@@ -178,94 +235,134 @@
       <span></span>
     </div>
     <nav id="nav">
+      <a href="#about">About US</a>
+      <a href="#team">The Team</a>
       <a href="#services">Previous Events</a>
       <a href="#contact">Contact US</a>
-      <a href="#team">The Team</a>
-      <a href="#about">About US</a>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>"Kp" Orginzation</h1>
-    <p>Testing slogan place</p>
-  </section>
+  <div class="main-content">
+    <section class="hero" id="hero">
+      <img class="logo3" src="logo.jpg" alt="Organization Logo" />
+      <p>Testing slogan place <br> there will add A picture of all team members</p>
+    </section>
 
-  <section id="about" class="section">
-    <h2>About Us</h2>
-    <div class="card">
-      <p>The Text Area of the About Us Slogan </p>
-    </div>
-  </section>
+    <section id="about" class="section">
+      <h2>About Us</h2>
+      <div class="card">
+        <p>The Text Area of the About Us Slogan</p>
+      </div>
+    </section>
 
-  <section class="section" id="team">
-    <div class="card">
-        <h2>The Orginzation Member . </h2>
+    <section id="team" class="section">
+      <div class="card">
+        <h2>The Organization Members</h2>
         <ul>
-            <li>The Profile image of the Member</li>
-            <li>His full Name</li>
-            <li>His Position</li>
+          <li>The Profile image of the Member</li>
+          <li>His full Name</li>
+          <li>His Position</li>
         </ul>
-    </div>
-  </section>
+      </div>
+    </section>
 
+    <section id="services" class="section">
+      <h2>Our Works</h2>
+      <div class="card">
+        <ul>
+          <li>There will inserted images and Videos with API about the Previous Event (if Youtube Channel exist)</li>
+          <li>If there isn't Youtube Channel, We will make Cpanel to add it as Static article</li>
+        </ul>
+      </div>
+    </section>
 
-  <section id="services" class="section">
-    <h2>Our Works</h2>
-    <div class="card">
-      <ul>
-      <li> There will inserted images and Videos with API about the Previous Event (if Youtube Channel exist)</li>
-      <li>if there isn't Youtube Channel , We will make Cpanel to add it as Static article </li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="contact" class="section">
-    <h2>Contact Us</h2>
-    <div class="card">
-      <p>Email: Our Email</p>
-      <p>Phone: Our Phone Number</p>
-      <p>Location: Our location </p>
-    </div>
-  </section>
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <div class="card">
+        <p>Email: Our Email</p>
+        <p>Phone: Our Phone Number</p>
+        <p>Location: Our location</p>
+      </div>
+    </section>
+  </div>
 
   <footer>
-    <p>&copy; 2025 <span>KP</span> Organization. All rights reserved.</p>
+    <p>&copy; 2025 <span class="span">KP</span> Organization. All rights reserved.</p>
   </footer>
 
   <script>
     // Toggle mobile menu
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('nav');
+    const hero = document.getElementById('hero');
 
-    hamburger.addEventListener('click', () => {
+    function toggleMenu() {
       nav.classList.toggle('active');
-      
-      // Animate hamburger to X
       hamburger.classList.toggle('active');
+      hero.classList.toggle('hidden');
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const isClickInsideNav = nav.contains(event.target) || hamburger.contains(event.target);
+      
+      if (!isClickInsideNav && nav.classList.contains('active')) {
+        toggleMenu();
+      }
     });
 
-    // Close menu when clicking a link
+    // Show section with animation when menu link is clicked
     document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        hamburger.classList.remove('active');
-      });
-    });
-
-    // Smooth scrolling (fallback for browsers that don't support CSS smooth scrolling)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
+      link.addEventListener('click', (e) => {
         e.preventDefault();
         
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => {
+          section.classList.remove('active');
+        });
         
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth'
-          });
+        // Show the selected section
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Close mobile menu if open
+        if (nav.classList.contains('active')) {
+          toggleMenu();
         }
       });
+    });
+
+    // Show the first section by default when page loads
+    window.addEventListener('load', () => {
+      // Check if URL has hash, if not default to #about
+      const initialSection = window.location.hash || '#about';
+      const targetSection = document.querySelector(initialSection);
+      
+      if (targetSection) {  
+        targetSection.classList.add('active');
+      } else {
+        // Fallback if hash doesn't match any section
+        document.querySelector('.section').classList.add('active');
+      }
+    });
+
+    // Handle back/forward navigation
+    window.addEventListener('popstate', () => {
+      const sectionId = window.location.hash || '#about';
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+      const targetSection = document.querySelector(sectionId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   </script>
 </body>
