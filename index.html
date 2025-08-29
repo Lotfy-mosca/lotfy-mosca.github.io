@@ -4,315 +4,584 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Organization Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-  --primary-dark: #0e1e4b;
-  --primary-light: #2cb6c2;
-}
+      --primary-dark: #0e1e4b;
+      --primary-light: #2cb6c2;
+      --accent: #ff6b6b;
+      --light-bg: #f8fafc;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
 
-html, body {
-  height: 100%;
-}
+    html, body {
+      height: 100%;
+    }
 
-body {
-  display: flex;
-  flex-direction: column;
-  background-color: #f4f8fa;
-  color: #333;
-  line-height: 1.6;
-}
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
 
-.main-content {
-  flex: 1;
-}
+    .main-content {
+      flex: 1;
+    }
 
-header {
-  background: var(--primary-dark);
-  color: white;
-  padding: 1.5rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+    header {
+      background: var(--primary-dark);
+      color: white;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-header img {
-  height: 50px;
-}
+    header img {
+      height: 50px;
+    }
 
-nav {
-  display: flex;
-  align-items: center;
-}
+    nav {
+      display: flex;
+      align-items: center;
+    }
 
-nav a {
-  color: white;
-  margin-left: 2rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
+    nav a {
+      color: white;
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-size: 1rem;
+    }
 
-nav a:hover {
-  color: var(--primary-light);
-}
+    nav a:hover {
+      color: var(--primary-light);
+    }
 
-.hamburger {
-  display: none;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 21px;
-}
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+    }
 
-.hamburger span {
-  display: block;
-  height: 3px;
-  width: 100%;
-  background-color: white;
-  border-radius: 3px;
-  transition: all 0.3s ease;
-}
+    .hamburger span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background-color: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
 
-.hero {
-  background: linear-gradient(to right, var(--primary-dark), var(--primary-light));
-  color: white;
-  padding: 4rem 2rem;
-  text-align: center;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* Hide hero when nav is active */
-.hero.hidden {
-    filter: blur(2px);
-}
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
+    }
 
-/* Section Animation Styles */
-.section {
-  display: none;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  padding: 4rem 2rem;
-  max-width: 1000px;
-  margin: 0 auto;
-  scroll-margin-top: 80px;
-}
+    /* Hide hero when nav is active */
+    .hero.hidden {
+      filter: blur(2px);
+    }
 
-.section.active {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
+    /* Typing animation styles */
+    .typing-container {
+      min-height: 80px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
+    #typing-text {
+      font-size: 1.8rem;
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+      position: relative;
+      min-height: 2.2rem;
+      font-weight: 600;
+    }
 
-footer {
-  background: var(--primary-dark);
-  color: white;
-  text-align: center;
-  padding: 1.5rem 2rem;
-  margin-top: auto;
-}
+    #typing-text::after {
+      content: "|";
+      position: absolute;
+      right: -8px;
+      animation: blink 0.7s infinite;
+    }
 
-.logo {
-  width: 50px;
-  border-radius: 50%;
-  box-shadow: 0px 0px 30px white;
-  z-index: 100;
-}
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
 
-/* Floating Logo Animation */
-.logo3 {
-  width: 40px;
-  scale: 2;
-  margin-bottom: 60px;
-  border-radius: 50%;
-  box-shadow: 0px 0px 30px rgb(107, 80, 80);
-  z-index: 100;
-  opacity: .7;
-  border: .2px solid black;
-  animation: float 3s ease-in-out infinite;
-}
+    /* Section Animation Styles */
+    .section {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      scroll-margin-top: 80px;
+    }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) scale(1.5);
-  }
-  50% {
-    transform: translateY(-9px) scale(1.5);
-  }
-}
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-span {
-  color: #abeaf0;
-  font-weight: 800;
-  font-style: oblique;
-  font-size: 46px;
-  text-shadow: 2px 2px 20px rgb(58, 41, 41);
-  width: 30px;
-}
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--primary-dark);
+      font-size: 2.2rem;
+      position: relative;
+    }
 
-.span {
-  color: #abeaf0;
-  font-weight: 800;
-  font-style: oblique;
-  font-size: 20px;
-  text-shadow: 2px 2px 20px rgb(58, 41, 41);
-  width: 30px;
-}
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-light);
+      margin: 0.5rem auto;
+      border-radius: 2px;
+    }
 
-/* Team Grid Styles */
-.team-grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.2rem;
-  max-width: 650px;
-  margin: 0 auto;
-}
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.team-member-card {
-  background: transparent;
-  border-radius: 16px;
-  box-shadow: 20px 2px 100px rgba(0,0,0,0.05);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  min-height: 400px;
-  width: 100%;
-}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    }
 
-.team-member-card-img-container {
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  overflow: hidden;
-}
+    footer {
+      background: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      margin-top: auto;
+    }
 
-.team-member-card-img {
-  width: auto;
-  border-radius: 20px;
-  height: 100%;
-  max-width: 100%;
-  scale: 1.1;
-  margin-top: 30px;
-  object-position: top center;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.team-member-card:hover .team-member-card-img {
-  transform: scale(1.03);
-}
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
 
-.team-member-card-content {
-  padding: 1.5rem;
-  text-align: center;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
 
-.team-card-name {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: var(--primary-dark);
-}
+    .social-links a:hover {
+      color: var(--primary-light);
+    }
 
-.team-card-position {
-  font-size: 1.1rem;
-  color: var(--primary-light);
-  font-weight: 400;
-  margin-top: 0;
-}
+    .logo {
+      width: 50px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 30px white;
+      z-index: 100;
+    }
 
-/* Loading placeholder */
-.team-member-card-img.loading {
-  background: #f0f0f0;
-}
+    /* Floating Logo Animation */
+    .logo3 {
+      width: 40px;
+      scale: 2;
+      margin-bottom: 60px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+      z-index: 100;
+      opacity: .9;
+      border: .2px solid white;
+      animation: float 3s ease-in-out infinite;
+    }
 
-/* Mobile styles */
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) scale(1.5);
+      }
+      50% {
+        transform: translateY(-9px) scale(1.5);
+      }
+    }
 
-  nav {
-    position: fixed;
-    top: 90px;
-    left: -100%;
-    width: 90%;
-    height: 270px;
-    margin-left: 30px;
-    background-color: var(--primary-dark);
-    border: 2px solid white;
-    opacity: 0.8;
-    border-radius: 5px;
-    margin-top: 20px;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.5rem 0;
-    transition: left 0.3s ease;
-    z-index: 99;
-  }
+    span {
+      color: #abeaf0;
+      font-weight: 800;
+      font-style: oblique;
+      font-size: 46px;
+      text-shadow: 2px 2px 20px rgba(58, 41, 41, 0.3);
+      width: 30px;
+    }
 
-  nav.active {
-    left: 0;
-  }
+    .span {
+      color: #abeaf0;
+      font-weight: 800;
+      font-style: oblique;
+      font-size: 20px;
+      text-shadow: 2px 2px 20px rgba(58, 41, 41, 0.3);
+      width: 30px;
+    }
 
-  nav a {
-    margin: 1rem 0;
-    width: 100%;
-    text-align: center;
-    opacity: 1;
-  }
+    /* Contact Section Styles */
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
 
-  .section {
-    scroll-margin-top: 140px;
-    padding: 2rem 1rem;
-  }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
-  .team-grid-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+    .contact-method {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-  .team-member-card {
-    min-height: 350px;
-  }
+    .contact-method:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+    }
 
-  .team-member-card-img-container {
-    height: 250px;
-  }
-}
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
+    .contact-details {
+      flex: 1;
+    }
+
+    .contact-details h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+
+    .contact-details p, .contact-details a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-details a:hover {
+      color: var(--primary-light);
+    }
+
+    .contact-form {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(44, 182, 194, 0.2);
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background: var(--primary-light);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      background: #239da9;
+      transform: translateY(-2px);
+    }
+
+    .map-container {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      height: 300px;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Team Grid Styles */
+    .team-grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-member-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-member-card-img-container {
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+      overflow: hidden;
+    }
+
+    .team-member-card-img {
+      width: auto;
+      border-radius: 20px;
+      height: 100%;
+      max-width: 100%;
+      scale: 1.1;
+      margin-top: 30px;
+      object-position: top center;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .team-member-card:hover .team-member-card-img {
+      transform: scale(1.05);
+    }
+
+    .team-member-card-content {
+      padding: 1.5rem;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .team-card-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+
+    .team-card-position {
+      font-size: 1.1rem;
+      color: var(--primary-light);
+      font-weight: 500;
+      margin-top: 0;
+    }
+
+    /* Loading placeholder */
+    .team-member-card-img.loading {
+      background: #f0f0f0;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 90%;
+        height: auto;
+        margin-left: 5%;
+        background-color: var(--primary-dark);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        opacity: 0.95;
+        border-radius: 12px;
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 0;
+        transition: left 0.3s ease;
+        z-index: 99;
+      }
+
+      nav.active {
+        left: 0;
+      }
+
+      nav a {
+        margin: 1rem 0;
+        width: 100%;
+        text-align: center;
+        opacity: 1;
+      }
+
+      .section {
+        scroll-margin-top: 100px;
+        padding: 2rem 1rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .contact-method {
+        padding: 1.2rem;
+      }
+
+      .contact-form {
+        padding: 1.5rem;
+      }
+
+      .team-grid-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .team-member-card {
+        min-height: auto;
+      }
+
+      .team-member-card-img-container {
+        height: 250px;
+      }
+      
+      /* Typing animation mobile */
+      .typing-container {
+        min-height: 60px;
+      }
+      
+      #typing-text {
+        font-size: 1.4rem;
+      }
+
+      .hero {
+        padding: 3rem 1.5rem;
+      }
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 <body>
@@ -334,25 +603,27 @@ html {
   <div class="main-content">
     <section class="hero" id="hero">
       <img class="logo3" src="logo.jpg" alt="Organization Logo" />
-      <p>Testing slogan place <br> there will add A picture of all team members</p>
+      <div class="typing-container">
+        <p id="typing-text"></p>
+      </div>
     </section>
 
     <section id="about" class="section">
-      <h2>About Us</h2>
+      <h2 class="section-title">About Us</h2>
       <div class="card">
         <p>The Text Area of the About Us Slogan</p>
       </div>
     </section>
 
     <section id="team" class="section">
-      <h2>The Organization Members</h2>
+      <h2 class="section-title">The Organization Members</h2>
       <div class="team-grid-container" id="teamGrid">
         <!-- Team cards will be inserted here by JavaScript -->
       </div>
     </section>
 
     <section id="services" class="section">
-      <h2>Our Works</h2>
+      <h2 class="section-title">Our Works</h2>
       <div class="card">
         <ul>
           <li>There will inserted images and Videos with API about the Previous Event (if Youtube Channel exist)</li>
@@ -362,20 +633,192 @@ html {
     </section>
 
     <section id="contact" class="section">
-      <h2>Contact Us</h2>
-      <div class="card">
-        <p>Email: Our Email</p>
-        <p>Phone: Our Phone Number</p>
-        <p>Location: Our location</p>
+      <h2 class="section-title">Contact Us</h2>
+      
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Phone</h3>
+              <a href="tel:01143829107">01143829107</a>
+              <p>Sunday to Thursday, 9AM to 5PM</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Email</h3>
+              <a href="mailto:kpeducationn@gmail.com">kpeducationn@gmail.com</a>
+              <p>We'll respond within 24 hours</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Location</h3>
+              <p>Cairo, Egypt</p>
+              <p>Visit our office by appointment</p>
+            </div>
+          </div>
+          
+          <div class="contact-method">
+            <div class="contact-icon">
+              <i class="fas fa-share-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h3>Social Media</h3>
+              <p>Follow us for updates and news</p>
+              <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <h3>Send us a Message</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea id="message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.60389525199!2d31.188423458203124!3d30.059618470532067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Cairo%20Governorate!5e0!3m2!1sen!2seg!4v1659285001711!5m2!1sen!2seg" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </section>
   </div>
 
   <footer>
-    <p>&copy; 2025 <span class="span">KP</span> Organization. All rights reserved.</p>
+    <div class="footer-content">
+      <img class="logo" src="logo.jpg" alt="Organization Logo" style="margin-bottom: 1.5rem;" />
+      <div class="social-links">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+      <p>&copy; 2025 <span class="span">KP</span> Organization. All rights reserved.</p>
+    </div>
   </footer>
 
   <script>
+    // Infinite typing animation function
+    function startInfiniteTyping() {
+      const typingText = document.getElementById('typing-text');
+      const text = "We Assist you To Build Your Knowledge base";
+      let textIndex = 0;
+      let isDeleting = false;
+      let typingSpeed = 100;
+      let pauseTime = 2000; // Time to pause before deleting
+      
+      function type() {
+        // Current text to display
+        const currentText = text.substring(0, textIndex);
+        typingText.textContent = currentText;
+        
+        if (!isDeleting) {
+          // Typing phase
+          textIndex++;
+          
+          if (textIndex > text.length) {
+            // Finished typing, pause then start deleting
+            isDeleting = true;
+            setTimeout(type, pauseTime);
+            return;
+          }
+        } else {
+          // Deleting phase
+          textIndex--;
+          
+          if (textIndex === 0) {
+            // Finished deleting, pause then start typing again
+            isDeleting = false;
+            setTimeout(type, pauseTime/2);
+            return;
+          }
+        }
+        
+        // Adjust speed for typing vs deleting
+        const speed = isDeleting ? typingSpeed/2 : typingSpeed;
+        setTimeout(type, speed);
+      }
+      
+      // Start the animation
+      type();
+    }
+
+    // Contact form handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // In a real application, you would send the form data to a server
+      // This is just a simulation
+      const submitBtn = this.querySelector('.submit-btn');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        alert('Thank you for your message! We will get back to you soon.');
+        this.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }, 1500);
+    });
+
+    // Initialize typing animation when page loads
+    window.addEventListener('load', () => {
+      // Start the infinite typing animation after a short delay
+      setTimeout(startInfiniteTyping, 500);
+      
+      // Check if URL has hash, if not default to #about
+      const initialSection = window.location.hash || '#team';
+      const targetSection = document.querySelector(initialSection);
+      
+      if (targetSection) {  
+        targetSection.classList.add('active');
+      } else {
+        // Fallback if hash doesn't match any section
+        document.querySelector('.section').classList.add('active');
+      }
+      
+      // Initialize team grid
+      initializeTeamGrid();
+    });
+
     // Toggle mobile menu
     const hamburger = document.getElementById('hamburger');
     const nav = document.getElementById('nav');
@@ -421,23 +864,6 @@ html {
           toggleMenu();
         }
       });
-    });
-
-    // Show the first section by default when page loads
-    window.addEventListener('load', () => {
-      // Check if URL has hash, if not default to #about
-      const initialSection = window.location.hash || '#team';
-      const targetSection = document.querySelector(initialSection);
-      
-      if (targetSection) {  
-        targetSection.classList.add('active');
-      } else {
-        // Fallback if hash doesn't match any section
-        document.querySelector('.section').classList.add('active');
-      }
-      
-      // Initialize team grid
-      initializeTeamGrid();
     });
 
     // Handle back/forward navigation
