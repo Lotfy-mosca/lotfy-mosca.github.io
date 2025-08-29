@@ -141,7 +141,7 @@
     #typing-text::after {
       content: "|";
       position: absolute;
-      right: -8px;
+      right: -10px;
       animation: blink 0.7s infinite;
     }
 
@@ -243,7 +243,8 @@
     .logo3 {
       width: 40px;
       scale: 2;
-      margin-bottom: 60px;
+      margin-bottom: 20px;
+      margin-top: 20px;
       border-radius: 50%;
       box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
       z-index: 100;
@@ -570,7 +571,7 @@
       }
       
       #typing-text {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
       }
 
       .hero {
@@ -586,7 +587,8 @@
 </head>
 <body>
   <header>
-    <img class="logo" src="logo.jpg" alt="Organization Logo" />
+
+  <!-- <img class="logo" src="logo.jpg" alt="Organization Logo" />   -->
     <div class="hamburger" id="hamburger">
       <span></span>
       <span></span>
@@ -740,8 +742,8 @@
       const text = "We Assist you To Build Your Knowledge base";
       let textIndex = 0;
       let isDeleting = false;
-      let typingSpeed = 100;
-      let pauseTime = 2000; // Time to pause before deleting
+      let typingSpeed = 50;
+      let pauseTime = 3000;// Time to pause before deleting
       
       function type() {
         // Current text to display
@@ -805,7 +807,7 @@
       setTimeout(startInfiniteTyping, 500);
       
       // Check if URL has hash, if not default to #about
-      const initialSection = window.location.hash || '#team';
+      const initialSection = window.location.hash || '#about';
       const targetSection = document.querySelector(initialSection);
       
       if (targetSection) {  
