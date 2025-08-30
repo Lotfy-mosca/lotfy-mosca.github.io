@@ -43,7 +43,7 @@
     header {
       background: var(--primary-dark);
       color: white;
-      padding: 1.2rem 2rem;
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -51,6 +51,11 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: padding 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 0.7rem 2rem;
     }
 
     header img {
@@ -67,12 +72,37 @@
       margin-left: 2rem;
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
       font-size: 1rem;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-light);
+      transition: width 0.3s ease;
     }
 
     nav a:hover {
       color: var(--primary-light);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a.active {
+      color: var(--primary-light);
+    }
+
+    nav a.active::after {
+      width: 100%;
     }
 
     .hamburger {
@@ -82,6 +112,8 @@
       justify-content: space-between;
       width: 30px;
       height: 21px;
+      position: relative;
+      z-index: 101;
     }
 
     .hamburger span {
@@ -91,6 +123,18 @@
       background-color: white;
       border-radius: 3px;
       transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
     }
 
     .hero {
@@ -200,6 +244,113 @@
       box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
     }
 
+    /* Image Slider Styles */
+    .slider-container {
+      position: relative;
+      max-width: 900px;
+      margin: 2rem auto;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease;
+      height: 600px;
+      width:900px;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .slider-btn:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .slider-btn.prev {
+      left: 20px;
+    }
+
+    .slider-btn.next {
+      right: 20px;
+    }
+
+    .slider-btn i {
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--primary-light);
+    }
+
+    /* Mobile slider styles */
+    @media (max-width: 768px) {
+      .slider-container {
+        height: 350px;
+      }
+      
+      .slider {
+        height: 350px;
+      }
+      
+      .slider-btn {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .slider-btn.prev {
+        left: 10px;
+      }
+      
+      .slider-btn.next {
+        right: 10px;
+      }
+    }
+
     footer {
       background: var(--primary-dark);
       color: white;
@@ -280,219 +431,6 @@
       width: 30px;
     }
 
-    /* Contact Section Styles */
-    .contact-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-      margin-top: 2rem;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .contact-method {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.5rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .contact-method:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
-    }
-
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--primary-light);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    .contact-details {
-      flex: 1;
-    }
-
-    .contact-details h3 {
-      margin-bottom: 0.5rem;
-      color: var(--primary-dark);
-    }
-
-    .contact-details p, .contact-details a {
-      color: var(--text-light);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .contact-details a:hover {
-      color: var(--primary-light);
-    }
-
-    .contact-form {
-      background: white;
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      padding: 2.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: var(--primary-dark);
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary-light);
-      box-shadow: 0 0 0 3px rgba(44, 182, 194, 0.2);
-    }
-
-    .form-group textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .submit-btn {
-      background: var(--primary-light);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .submit-btn:hover {
-      background: #239da9;
-      transform: translateY(-2px);
-    }
-
-    .map-container {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-      height: 300px;
-    }
-
-    .map-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Team Grid Styles */
-    .team-grid-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .team-member-card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .team-member-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15);
-    }
-
-    .team-member-card-img-container {
-      width: 100%;
-      height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f1f5f9;
-      overflow: hidden;
-    }
-
-    .team-member-card-img {
-      width: auto;
-      border-radius: 20px;
-      height: 100%;
-      max-width: 100%;
-      scale: 1.1;
-      margin-top: 30px;
-      object-position: top center;
-      object-fit: contain;
-      transition: transform 0.3s ease;
-    }
-
-    .team-member-card:hover .team-member-card-img {
-      transform: scale(1.05);
-    }
-
-    .team-member-card-content {
-      padding: 1.5rem;
-      text-align: center;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .team-card-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--primary-dark);
-    }
-
-    .team-card-position {
-      font-size: 1.1rem;
-      color: var(--primary-light);
-      font-weight: 500;
-      margin-top: 0;
-    }
-
-    /* Loading placeholder */
-    .team-member-card-img.loading {
-      background: #f0f0f0;
-    }
-
     /* Mobile styles */
     @media (max-width: 768px) {
       .hamburger {
@@ -539,30 +477,8 @@
         margin-bottom: 2rem;
       }
 
-      .contact-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .contact-method {
-        padding: 1.2rem;
-      }
-
-      .contact-form {
-        padding: 1.5rem;
-      }
-
-      .team-grid-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .team-member-card {
-        min-height: auto;
-      }
-
-      .team-member-card-img-container {
-        height: 250px;
+      .hero {
+        padding: 3rem 1.5rem;
       }
       
       /* Typing animation mobile */
@@ -573,11 +489,55 @@
       #typing-text {
         font-size: 1.2rem;
       }
-
-      .hero {
-        padding: 3rem 1.5rem;
-      }
+      /* Mobile slider styles */
     }
+
+    /* Mobile slider styles */
+@media (max-width: 768px) {
+  .slider-container {
+    height: auto;
+    max-width: 100%;
+    margin: 1.5rem auto;
+    border-radius: 12px;
+    aspect-ratio: 3/4;
+    margin-top: -85px;
+  }
+  
+  .slider {
+    height: 100%;
+    width: 100%;
+  }
+  
+  .slide img {
+    object-fit: contain;
+    background-color: #f8fafc;
+  }
+  
+  .slider-btn {
+    display: none;
+  }
+  
+  .slider-btn.prev {
+    left: 8px;
+  }
+  
+  .slider-btn.next {
+    right: 8px;
+  }
+  
+  .slider-btn i {
+    font-size: 1.2rem;
+  }
+  
+  .slider-dots {
+    margin-top: 1rem;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
 
     /* Smooth scrolling */
     html {
@@ -586,19 +546,17 @@
   </style>
 </head>
 <body>
-  <header>
-
-  <!-- <img class="logo" src="logo.jpg" alt="Organization Logo" />   -->
+  <header id="main-header">
     <div class="hamburger" id="hamburger">
       <span></span>
       <span></span>
       <span></span>
     </div>
     <nav id="nav">
-      <a href="#about">About US</a>
-      <a href="#team">The Team</a>
-      <a href="#services">Previous Events</a>
-      <a href="#contact">Contact US</a>
+      <a href="#about" class="nav-link">About US</a>
+      <a href="#team" class="nav-link">The Team</a>
+      <a href="#services" class="nav-link">Previous Events</a>
+      <a href="#contact" class="nav-link">Contact US</a>
     </nav>
   </header>
 
@@ -613,7 +571,41 @@
     <section id="about" class="section">
       <h2 class="section-title">About Us</h2>
       <div class="card">
-        <p>The Text Area of the About Us Slogan</p>
+        <p></p>
+        
+        <!-- Image Slider -->
+        <div class="slider-container">
+          <div class="slider" id="slider">
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-1.png" alt="Image 1">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-2.png" alt="Image 2">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-3.png" alt="Image 3">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-4.png" alt="Image 4">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-5.png" alt="Image 5">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-6.png" alt="Image 6">
+            </div>
+            <div class="slide">
+              <img src="./pdf-image/lotfy_11zon-7.png" alt="Image 7">
+            </div>
+          </div>
+          <button class="slider-btn prev" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-btn next" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
     </section>
 
@@ -801,6 +793,106 @@
       }, 1500);
     });
 
+    // Image Slider Functionality
+    function initImageSlider() {
+      const slider = document.getElementById('slider');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsContainer = document.getElementById('sliderDots');
+      
+      let currentSlide = 0;
+      const slideCount = slider.children.length;
+      let startX = 0;
+      let endX = 0;
+      
+      // Create dots
+      for (let i = 0; i < slideCount; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+      
+      // Go to specific slide
+      function goToSlide(index) {
+        if (index < 0) index = slideCount - 1;
+        if (index >= slideCount) index = 0;
+        
+        slider.style.transform = `translateX(-${index * 100}%)`;
+        currentSlide = index;
+        
+        // Update active dot
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+      }
+      
+      // Next slide
+      function nextSlide() {
+        goToSlide(currentSlide + 1);
+      }
+      
+      // Previous slide
+      function prevSlide() {
+        goToSlide(currentSlide - 1);
+      }
+      
+      // Event listeners for buttons
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+      
+      // Touch events for mobile swipe
+      slider.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
+      
+      slider.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+      });
+      
+      // Mouse events for desktop drag
+      slider.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        slider.addEventListener('mousemove', handleMouseMove);
+        slider.addEventListener('mouseup', handleMouseUp);
+        slider.addEventListener('mouseleave', handleMouseUp);
+      });
+      
+      function handleMouseMove(e) {
+        endX = e.clientX;
+      }
+      
+      function handleMouseUp() {
+        handleSwipe();
+        slider.removeEventListener('mousemove', handleMouseMove);
+        slider.removeEventListener('mouseup', handleMouseUp);
+        slider.removeEventListener('mouseleave', handleMouseUp);
+      }
+      
+      function handleSwipe() {
+        const diffX = startX - endX;
+        
+        // Minimum swipe distance
+        if (Math.abs(diffX) > 50) {
+          if (diffX > 0) {
+            // Swipe left - next slide
+            nextSlide();
+          } else {
+            // Swipe right - previous slide
+            prevSlide();
+          }
+        }
+      }
+      
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+      });
+    }
+
     // Initialize typing animation when page loads
     window.addEventListener('load', () => {
       // Start the infinite typing animation after a short delay
@@ -812,6 +904,13 @@
       
       if (targetSection) {  
         targetSection.classList.add('active');
+        // Set active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === initialSection) {
+            link.classList.add('active');
+          }
+        });
       } else {
         // Fallback if hash doesn't match any section
         document.querySelector('.section').classList.add('active');
@@ -819,7 +918,44 @@
       
       // Initialize team grid
       initializeTeamGrid();
+      
+      // Initialize image slider
+      initImageSlider();
+      
+      // Add scroll event listener for header
+      window.addEventListener('scroll', handleHeaderScroll);
     });
+
+    // Handle header scroll effect
+    function handleHeaderScroll() {
+      const header = document.getElementById('main-header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+      
+      // Update active nav link based on scroll position
+      const sections = document.querySelectorAll('.section');
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (window.scrollY >= sectionTop - 100 && 
+            window.scrollY < sectionTop + sectionHeight - 100) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+          link.classList.add('active');
+        }
+      });
+    }
 
     // Toggle mobile menu
     const hamburger = document.getElementById('hamburger');
@@ -861,6 +997,15 @@
           targetSection.scrollIntoView({ behavior: 'smooth' });
         }
         
+        // Set active nav link
+        document.querySelectorAll('nav a').forEach(navLink => {
+          navLink.classList.remove('active');
+        });
+        link.classList.add('active');
+        
+        // Update URL hash
+        history.pushState(null, null, targetId);
+        
         // Close mobile menu if open
         if (nav.classList.contains('active')) {
           toggleMenu();
@@ -878,6 +1023,14 @@
       if (targetSection) {
         targetSection.classList.add('active');
         targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Set active nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === sectionId) {
+            link.classList.add('active');
+          }
+        });
       }
     });
 
